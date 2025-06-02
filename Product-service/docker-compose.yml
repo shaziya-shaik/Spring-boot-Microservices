@@ -1,0 +1,42 @@
+
+services:
+  mongodb:
+    image: mongo:7.0.5
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+      MONGO_INITDB_DATABASE: product-service
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+    networks:
+      - product-network
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    ports:
+      - "8090:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 1234
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_BASICAUTH_USERNAME: admin      # optional login for Mongo Express UI
+      ME_CONFIG_BASICAUTH_PASSWORD: admin      # optional login for Mongo Express UI
+    depends_on:
+      - mongodb
+    networks:
+      - product-network
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin-product
+    ports:
+      - "9411:9411"
+    networks:
+      - product-network
+
+networks:
+  product-network:
+    driver: bridge

@@ -1,0 +1,28 @@
+services:
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql-inventory
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: inventory-service
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/mysql/data:/var/lib/mysql
+    networks:
+      - inventory-network
+
+  mysql-workbench:
+    image: adminer
+    container_name: mysql-workbench-inventory
+    ports:
+      - "3309:8080"  # You can change this if needed
+    networks:
+      - inventory-network
+    depends_on:
+      - mysql
+
+networks:
+  inventory-network:
+    driver: bridge
