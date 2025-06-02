@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 
-@FeignClient(value = "inventory-service" , url = "${inventory.url}")
+@FeignClient(value = "inventory-service" , url = "${inventory-service.url}")
 public interface InventoryClient {
     Logger log = LoggerFactory.getLogger(InventoryClient.class);
 

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.microservices</groupId>
-    <artifactId>Notification-service</artifactId>
+    <artifactId>notification-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Notification-service</name>
+    <name>notification-service</name>
     <description>Notification-service</description>
     <url/>
     <licenses>

@@ -12,10 +12,10 @@
     </parent>
 
     <groupId>com.microservices</groupId>
-    <artifactId>Order-service</artifactId>
+    <artifactId>order-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Order-service</name>
-    <description>Order-service</description>
+    <name>order-service</name>
+    <description>order-service</description>
 
     <properties>
         <java.version>17</java.version>

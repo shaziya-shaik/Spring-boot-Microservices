@@ -1,5 +1,6 @@
 package com.microservices.apigateway.Routes;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.server.mvc.filter.CircuitBreakerFilterFunctions;
 import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions;
 import org.springframework.context.annotation.Bean;
@@ -16,11 +17,21 @@ import static org.springframework.cloud.gateway.server.mvc.handler.GatewayRouter
 
 @Configuration
 public class Routes {
+    @Value("${product-service-url}")
+    private String productServiceUrl;
+    @Value("${order-service-url}")
+    private String orderServiceUrl;
+    @Value("${inventory-service-url}")
+    private String inventoryServiceUrl;
+    @Value("${notification-service-url}")
+    private String notificationServiceUrl;
+
+
 
     @Bean
     public RouterFunction<ServerResponse> ProductServiceRoutes(CircuitBreakerFilterFunctions.FilterSupplier circuitBreakerFilterFunctionsSupplier) {
         return route("product-service")
-                .route(RequestPredicates.path("/api/product"), HandlerFunctions.http("http://localhost:8081"))
+                .route(RequestPredicates.path("/api/product"), HandlerFunctions.http(productServiceUrl))
                // .filter(CircuitBreakerFilterFunctions.circuitBreaker("ProductServiceCircuitBreaker" ,
                   //      URI.create("forward:/fallbackRoute")))
                 .build();
@@ -29,7 +40,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> OrderServiceRoutes() {
         return route("order-service")
-                .route(RequestPredicates.path("/api/order"), HandlerFunctions.http("http://localhost:8082"))
+                .route(RequestPredicates.path("/api/order"), HandlerFunctions.http(orderServiceUrl))
 //                .filter(CircuitBreakerFilterFunctions.circuitBreaker("OrderServiceCircuitBreaker" ,
 //                        URI.create("forward:/fallbackRoute")))
                 .build();
@@ -38,7 +49,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> InventoryServiceRoutes() {
         return route("inventory-service")
-                .route(RequestPredicates.path("/api/inventory"), HandlerFunctions.http("http://localhost:8083"))
+                .route(RequestPredicates.path("/api/inventory"), HandlerFunctions.http(notificationServiceUrl))
 //                .filter(CircuitBreakerFilterFunctions.circuitBreaker("InventoryServiceCircuitBreaker" ,
 //                        URI.create("forward:/fallbackRoute")))
                 .build();
